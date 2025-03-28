@@ -1,0 +1,42 @@
+Week 3: Advanced Security and Final Reporting
+This week’s focus was on strengthening the application from a security perspective and wrapping up the implementation with proper logging, testing, and documentation. After patching known vulnerabilities in the previous weeks, the goal here was to validate the security posture and ensure observability through logs.
+
+1. Basic Penetration Testing (Nikto)
+To simulate external attacks and test the server’s resilience, I used Nikto, a widely trusted web server scanner.
+Command Used:
+nikto -h http://localhost:9090
+Summary of Findings:
+•	7,859 requests were processed during the scan.
+•	No critical errors or crashes were reported.
+•	The following issues were observed:
+o	Missing X-Content-Type-Options header, which could allow content-type sniffing in browsers.
+o	The /login and /register pages were exposed and accessible, which is expected for authentication flows.
+o	Only GET and HEAD methods were allowed, which is a secure default behavior.
+This confirmed that the DVNA instance was generally stable and secure during basic web vulnerability testing.
+
+2. Implementing Secure Logging with Winston
+To monitor and trace important activities or potential misuse within the app, I integrated Winston, a versatile logging library.
+
+What was done:
+•	Installed winston and created a centralized logger file (core/logger.js).
+•	Configured the logger to write logs to both the console and a file named security.log.
+•	Added specific log statements in sensitive routes, especially in /ping, which could potentially be abused.
+Example Logging Code:
+•	logger.warn(`/ping received potentially dangerous input: ${req.body.address}`);
+This ensures that unexpected or suspicious user inputs are captured and stored, providing better insight and auditability.
+
+3. Security Checklist
+To conclude, I compiled a checklist of essential security practices and verified that each had been addressed in the project:
+Security Measure	Status
+Input validation using validator	Implemented
+Password hashing with bcrypt	Implemented
+Session management using express-session	In place
+Secure HTTP headers via helmet	Enabled
+Logging suspicious inputs with winston	Configured
+Route access control (auth middleware)	Verified
+
+Final Notes
+The application is now better equipped to handle common security threats. This week solidified the improvements made in earlier stages by actively validating the defenses and establishing a basic logging system. While DVNA is intentionally vulnerable for educational purposes, the implemented changes demonstrate how these weaknesses can be identified and mitigated in a real-world application.
+This concludes Week 3 and the final phase of hands-on security improvements.
+
+
