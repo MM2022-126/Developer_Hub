@@ -1,0 +1,19 @@
+ Key Findings from the Nmap Output:
+1. Port 9090 is Open
+•	Confirmed your DVNA app is running.
+•	It returns a 302 Redirect to /login, so authentication is required.
+2. HTTP Headers Show Security Features
+Your app is using Helmet, which is great. We can see it sets:
+•	Content-Security-Policy
+•	X-Frame-Options
+•	X-Content-Type-Options
+•	Strict-Transport-Security
+•	And others…
+These are good hardening measures. 
+3. Session Cookie
+Nmap captured this:
+Set-Cookie: connect.sid=s%3A...
+This shows a session is being created even on redirection. Useful for session management testing or hijacking if not secured properly.
+4. Server Fingerprint Not Recognized
+Nmap shows zeus-admin? because DVNA isn't a well-known service — but that’s fine for a custom app.
+
